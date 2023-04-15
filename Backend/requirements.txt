@@ -4,4 +4,3 @@ pandas
 Pillow
 tensorflow
 streamlit
-os
