@@ -6,8 +6,11 @@ import numpy as np
 import pandas as pd
 import io
 import base64
+import os
 
 # Load the pre-trained model
+current_path = os.getcwd()
+print("Current Path: ",current_path)
 model = load_model('model.h5')
 
 # Load the CSV file into a Pandas DataFrame
