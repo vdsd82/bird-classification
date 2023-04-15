@@ -3,8 +3,4 @@ numpy
 pandas
 Pillow
 tensorflow
-<<<<<<< HEAD
 streamlit
-=======
-streamlit
->>>>>>> aa0ede6d20d3e20a40b3b7a82711c33798f3f085
