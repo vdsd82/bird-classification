@@ -10,7 +10,7 @@ import os
 
 # Load the pre-trained model
 current_path = os.getcwd()
-print("Current Path: ",current_path)
+print("Current Path: ",os.listdir() )
 model = load_model('model.h5')
 
 # Load the CSV file into a Pandas DataFrame
