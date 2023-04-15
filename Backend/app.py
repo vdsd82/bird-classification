@@ -8,10 +8,10 @@ import io
 import base64
 
 # Load the pre-trained model
-model = load_model('model.h5')
+model = load_model('Data/model.h5')
 
 # Load the CSV file into a Pandas DataFrame
-df = pd.read_csv("birds.csv")
+df = pd.read_csv("Data/birds.csv")
 
 # Define the list of class names
 class_names = df['labels'].tolist()
