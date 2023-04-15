@@ -6,24 +6,32 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import ClassificationResult from '../components/ClassificationResult';
 import Markdown from '../components/Markdown';
 import Footer from '../components/Footer';
+import { classifyImage } from '../utils/helpers';
+import { fetchBirdDetails } from '../utils/helpers';
 
 export default function Home() {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [birdDetails, setBirdDetails] = useState(null);
 
   const handleUpload = async () => {
     if (!image) return;
 
     setLoading(true);
-    // Call the API to classify the image and get the result
-    // setResult(await classifyImage(image));
+    setResult(await classifyImage(image));
+    
     setLoading(false);
   };
 
-  const handleShowDetails = () => {
-    setShowDetails(true);
+  const handleShowDetails = async () => {
+    if (result) {
+      const birdName = result[0].label.toLowerCase().split(' ').join('-');
+      const mdContent = await fetchBirdDetails(birdName);
+      setBirdDetails(mdContent);
+      setShowDetails(true);
+    }
   };
 
   return (
@@ -31,13 +39,19 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         {!image && (
-          <UploadImage image={image} setImage={setImage} />
+          <UploadImage setImage={setImage} />
         )}
         {image && (
-          <ImagePreview image={image} setImage={setImage} handleUpload={handleUpload} />
+          <ImagePreview image={image} setImage={setImage} handleUpload={handleUpload} setResult={setResult} setBirdDetails= {setBirdDetails}/>        )}
+        {loading ? (
+          <div className="flex justify-center items-center">
+            <LoadingIndicator />
+            <span className="ml-4">Analyzing<span className="animate-dots">...</span></span>
+          </div>
+        ) : (
+          <ClassificationResult result={result} onShowDetails={handleShowDetails} />
         )}
-        {loading ? <LoadingIndicator /> : <ClassificationResult result={result} onShowDetails={handleShowDetails} />}
-        {showDetails && <Markdown content="Test" />}
+        {showDetails && <Markdown content={birdDetails} />}
       </main>
       <Footer />
     </div>

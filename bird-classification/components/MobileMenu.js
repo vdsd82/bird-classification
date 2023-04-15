@@ -6,6 +6,7 @@ const MobileMenu = ({ isOpen, closeMenu }) => {
   const router = useRouter();
 
   return (
+    
     <div
       className={`${
         isOpen ? 'flex' : 'hidden'
